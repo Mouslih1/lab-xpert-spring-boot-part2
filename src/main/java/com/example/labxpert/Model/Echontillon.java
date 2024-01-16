@@ -31,7 +31,8 @@ public class Echontillon {
     @Enumerated(EnumType.STRING)
     private StatusEchontillon statusEchontillon;
 
-    private Boolean is_delete;
+    @Column(name = "is_deleted")
+    private Boolean deleted;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "echontillon", fetch = FetchType.EAGER)

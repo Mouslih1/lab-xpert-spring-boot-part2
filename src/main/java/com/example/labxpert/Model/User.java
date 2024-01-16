@@ -21,7 +21,8 @@ public class User extends Person {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    private Boolean is_delete;
+    @Column(name = "is_deleted")
+    private Boolean deleted;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "technicienResponsable", fetch = FetchType.EAGER)

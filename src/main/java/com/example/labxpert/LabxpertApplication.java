@@ -1,6 +1,7 @@
 package com.example.labxpert;
 
 import com.example.labxpert.Model.*;
+import com.example.labxpert.Model.Enum.Sexe;
 import com.example.labxpert.Service.*;
 import lombok.AllArgsConstructor;
 import org.hibernate.Session;
@@ -249,23 +250,53 @@ public class LabxpertApplication implements CommandLineRunner{
 			System.out.println(reactif);
 		}*/
 
-		/*Fournisseur fournisseur = new Fournisseur();
+	/*	Fournisseur fournisseur = new Fournisseur();
 		fournisseur.setNameComplet("abdo mouslih");
 		fournisseur.setSocieteName("nan");
 		fournisseur.setIs_delete(false);
 
-		//iFournisseurService.add(fournisseur);*/
+		iFournisseurService.add(fournisseur);*/
 
-		/*Fournisseur fournisseur = iFournisseurService.getById(5L);
 
+		//Reactif reactif = iReactifService.getById(1L);
+		//System.out.println(fournisseur);
+		/**/
+		/*Fournisseur fournisseur = new Fournisseur();
+		fournisseur.setNameComplet("abdo mouslih");
+		fournisseur.setSocieteName("nan");
+		fournisseur.setIs_delete(false);
+		*//*reactif.getFournisseurs().add(fournisseur);*//*
+		fournisseur.getReactifs().add(reactif);
+		//iReactifService.add(reactif);
+		iFournisseurService.add(fournisseur);*/
+
+		/*Reactif reactif = iReactifService.getById(1L);
+		System.out.println(reactif);
+		Fournisseur fournisseur = iFournisseurService.getById(1L);
+		System.out.println(fournisseur);*/
+/*
+		Fournisseur fournisseur = iFournisseurService.getById(2L);
 		Reactif reactif = new Reactif();
 		reactif.setNom("reactif 11");
 		reactif.setDescription("description 11");
 		reactif.setDate_exp(LocalDate.now());
 		reactif.setIs_delete(false);
 		reactif.setQuantity_stock(20);
-
-		reactif.setFournisseur(fournisseur);
+		reactif.getFournisseurs().add(fournisseur);
 		iReactifService.add(reactif);*/
+
+		// Patient patient = new Patient();
+		/*Patient patient = iPatientService.getById(1L);
+		patient.setNom("marouane");
+		patient.setPrenom("mouslih");
+		patient.setTel("0630011276");
+		patient.setVille("casablanca");
+		patient.setAddress("address 1");
+		patient.setSexe(Sexe.MALE);
+		patient.setDate_naissance(LocalDate.now());
+		patient.setAge(22);
+		patient.setDeleted(false);
+		//iPatientService.update(patient);
+		iPatientService.add(patient);*/
 	}
 }

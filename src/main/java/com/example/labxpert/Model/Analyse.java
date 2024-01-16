@@ -39,7 +39,8 @@ public class Analyse {
     private LocalDate date_fin;
     private String commantaires;
 
-    private Boolean is_delete;
+    @Column(name = "is_deleted")
+    private Boolean deleted;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "analyse", fetch = FetchType.EAGER)

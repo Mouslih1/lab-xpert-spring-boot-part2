@@ -28,5 +28,6 @@ public class Planification {
     private LocalDate date_debut;
     private LocalDate date_fin;
 
-    private Boolean is_delete;
+    @Column(name = "is_deleted")
+    private Boolean deleted;
 }

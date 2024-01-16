@@ -23,9 +23,10 @@ public class Fournisseur {
     private String nameComplet;
     private String societeName;
 
-    private Boolean is_delete;
+    @Column(name = "is_deleted")
+    private Boolean deleted;
 
     @ToString.Exclude
-    @OneToMany(mappedBy = "fournisseur",fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "fournisseurs", fetch = FetchType.EAGER)
     private List<Reactif> reactifs = new ArrayList<>();
 }

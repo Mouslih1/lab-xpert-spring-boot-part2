@@ -10,19 +10,23 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "resultats")
-public class Result {
+@Table(name = "echnotillon_material")
+public class EchontillonMaterial {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private double valeur_result;
-    private String unite_mesure;
+    @ManyToOne
+    private Echontillon echontillon;
+
+    @ManyToOne
+    private Material material;
+
+    private int quantity;
+
+    private double price_total;
 
     @Column(name = "is_deleted")
     private Boolean deleted;
-
-    @OneToOne
-    private SousAnalyse sousAnalyse;
 }

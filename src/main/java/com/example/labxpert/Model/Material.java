@@ -10,19 +10,15 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "resultats")
-public class Result {
+@Table(name = "materials")
+public class Material {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    private double valeur_result;
-    private String unite_mesure;
-
+    private String libelle;
+    private int availableQuantity;
+    private double price;
     @Column(name = "is_deleted")
     private Boolean deleted;
-
-    @OneToOne
-    private SousAnalyse sousAnalyse;
 }
