@@ -1,5 +1,6 @@
 package com.example.labxpert.Model;
 
+import com.example.labxpert.Model.Enum.StatusAnalyse;
 import com.example.labxpert.Model.Enum.StatusResult;
 import com.example.labxpert.Model.Enum.TypeAnalyse;
 import lombok.AllArgsConstructor;
@@ -38,6 +39,9 @@ public class Analyse {
     private LocalDate date_debut;
     private LocalDate date_fin;
     private String commantaires;
+
+    @Enumerated(EnumType.STRING)
+    private StatusAnalyse statusAnalyse;
 
     @Column(name = "is_deleted")
     private Boolean deleted;

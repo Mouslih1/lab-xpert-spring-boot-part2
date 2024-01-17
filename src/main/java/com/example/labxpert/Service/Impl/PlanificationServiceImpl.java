@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
 @AllArgsConstructor
 public class PlanificationServiceImpl implements IPlanificationService {
 

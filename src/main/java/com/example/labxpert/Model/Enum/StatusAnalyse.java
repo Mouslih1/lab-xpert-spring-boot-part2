@@ -1,6 +1,6 @@
 package com.example.labxpert.Model.Enum;
 
-public enum StatusEchontillon {
+public enum StatusAnalyse {
     en_cours,
     en_attend,
     termine

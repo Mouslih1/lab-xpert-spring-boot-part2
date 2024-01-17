@@ -1,6 +1,5 @@
 package com.example.labxpert.Model;
 
-import com.example.labxpert.Model.Enum.StatusEchontillon;
 import com.example.labxpert.Model.Enum.TypeAnalyse;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,9 +26,6 @@ public class Echontillon {
     private Patient patient;
 
     private LocalDate date_p;
-
-    @Enumerated(EnumType.STRING)
-    private StatusEchontillon statusEchontillon;
 
     @Column(name = "is_deleted")
     private Boolean deleted;

@@ -1,12 +1,13 @@
 package com.example.labxpert.Controller;
 
-import com.example.labxpert.Model.Patient;
+import com.example.labxpert.Dtos.PatientDto;
 import com.example.labxpert.Service.IPatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -15,34 +16,45 @@ import java.util.NoSuchElementException;
 @RequestMapping("/api/v1/patient")
 public class PatientController {
 
-    private IPatientService iPatientService;
+    private final IPatientService iPatientService;
 
-    @GetMapping
-    public List<Patient> getAll()
+    @GetMapping("/all")
+    public ResponseEntity<List<PatientDto>> getAll()
     {
-        return iPatientService.getAll();
+        return ResponseEntity.ok(iPatientService.getAll());
     }
 
-    @PostMapping("/add")
-    public ResponseEntity<Patient> save(@RequestBody Patient patient)
+    @PostMapping
+    public ResponseEntity<PatientDto> save(@RequestBody @Valid PatientDto patientDto)
     {
-        Patient patientSaved = iPatientService.add(patient);
+        PatientDto patientSaved = iPatientService.add(patientDto);
         return new ResponseEntity<>(patientSaved, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
-    public ResponseEntity<Patient> update(@RequestBody Patient patient)
+    @PutMapping("/{id}")
+    public ResponseEntity<PatientDto> update(@RequestBody @Valid PatientDto patientDto, @PathVariable Long id)
     {
-        Patient patientUpdated = iPatientService.update(patient);
+        PatientDto patientUpdated = iPatientService.update(id, patientDto);
         return new ResponseEntity<>(patientUpdated, HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Patient> getById(@PathVariable Long id)
+    public ResponseEntity<PatientDto> getById(@PathVariable Long id)
     {
         try{
-            Patient patient = iPatientService.getById(id);
+            PatientDto patient = iPatientService.getById(id);
             return new ResponseEntity<>(patient, HttpStatus.OK);
+        }catch (NoSuchElementException e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping
+    public ResponseEntity<PatientDto> getByName(@RequestParam String name)
+    {
+        try{
+            PatientDto patient = iPatientService.getByName(name);
+            return  new ResponseEntity<>(patient, HttpStatus.OK);
         }catch (NoSuchElementException e){
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -54,5 +66,4 @@ public class PatientController {
         iPatientService.delete(id);
         return new ResponseEntity<>("Patient deleted successfully", HttpStatus.OK);
     }
-
 }
