@@ -4,6 +4,7 @@ import com.example.labxpert.Dtos.PatientDto;
 import com.example.labxpert.Model.Enum.Sexe;
 import com.example.labxpert.Model.Patient;
 import com.example.labxpert.Service.Impl.PatientServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,9 +25,9 @@ import java.time.LocalDate;
 import java.util.Collections;
 
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 
 
 @WebMvcTest(controllers = PatientController.class)
@@ -79,7 +80,7 @@ class PatientControllerTest {
         given(patientService.add(ArgumentMatchers.any(PatientDto.class)))
                 .willAnswer(invocationOnMock -> invocationOnMock.getArgument(0));
 
-        ResultActions response = mockMvc.perform(post("/api/v1/patient/add")
+        ResultActions response = mockMvc.perform(post("/api/v1/patients/add")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(patientDto)));
 
@@ -92,9 +93,42 @@ class PatientControllerTest {
     {
         when(patientService.getAll()).thenReturn(Collections.singletonList(patientDto));
 
-        ResultActions response = mockMvc.perform(get("/api/v1/patient/all")
+        ResultActions response = mockMvc.perform(get("/api/v1/patients")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void patientController_getByIDPatient_ReturnPatient() throws Exception {
+        when(patientService.getById(1L)).thenReturn(patientDto);
+
+        ResultActions response = mockMvc.perform(get("/api/v1/patients/1")
                 .contentType(MediaType.APPLICATION_JSON));
 
         response.andExpect(MockMvcResultMatchers.status().isOk()).andDo(MockMvcResultHandlers.print());
+    }
+
+    @Test
+    public void patientController_deletePatient_ReturnNothing() throws Exception {
+        doNothing().when(patientService).delete(1L);
+
+        ResultActions response = mockMvc.perform(delete("/api/v1/patients/1/delete")
+                .contentType(MediaType.APPLICATION_JSON));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void patientController_updatePatient_ReturnPatient() throws Exception {
+        when(patientService.update(1L, patientDto)).thenReturn(patientDto);
+
+        ResultActions response = mockMvc.perform(put("/api/v1/patients/1/update")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(patientDto)));
+
+        response.andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print());
     }
 }

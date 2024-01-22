@@ -1,12 +1,11 @@
 package com.example.labxpert.Service.Impl;
 
-import com.example.labxpert.Dtos.PatientDto;
 import com.example.labxpert.Dtos.UserDto;
+import com.example.labxpert.Exception.EmailDuplicateRecordException;
 import com.example.labxpert.Exception.NotFoundException;
 import com.example.labxpert.Model.User;
 import com.example.labxpert.Repository.IUserRepository;
 import com.example.labxpert.Service.IUserService;
-//import com.sun.xml.internal.ws.developer.Serialization;
 import io.micrometer.core.instrument.util.StringUtils;
 import lombok.AllArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -137,7 +136,7 @@ public class UserServiceImpl implements IUserService {
 
         if(userDto.getEmail().equals(getByEmail(userDto.getEmail())))
         {
-            throw new ValidationException("Email already exist in system.");
+            throw new EmailDuplicateRecordException("Email already exist in system.");
         }
 
         if (userDto.getPassword() == null) {

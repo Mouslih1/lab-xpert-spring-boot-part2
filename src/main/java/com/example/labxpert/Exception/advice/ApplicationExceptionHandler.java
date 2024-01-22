@@ -1,5 +1,6 @@
 package com.example.labxpert.Exception.advice;
 
+import com.example.labxpert.Exception.EmailDuplicateRecordException;
 import com.example.labxpert.Exception.MessageErrorException.MessageError;
 import com.example.labxpert.Exception.NotFoundException;
 import org.hibernate.engine.jdbc.spi.SqlExceptionHelper;
@@ -73,6 +74,13 @@ public class ApplicationExceptionHandler {
 
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<MessageError> handleHttpMessageNotReadableException(HttpMessageNotReadableException exception)
+    {
+        MessageError messageError = new MessageError(exception.getMessage());
+        return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(EmailDuplicateRecordException.class)
+    public ResponseEntity<MessageError> hanldeEmailDuplicateRecordException(EmailDuplicateRecordException exception)
     {
         MessageError messageError = new MessageError(exception.getMessage());
         return new ResponseEntity<>(messageError, HttpStatus.BAD_REQUEST);

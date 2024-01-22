@@ -40,6 +40,9 @@ public class SousAnalyseServiceImpl implements ISousAnalyseService {
         Analyse analyseExist = iAnalyseRepository.findByIdAndDeletedFalse(sousAnalyseDto.getAnalyse().getId()).orElseThrow(() -> new NotFoundException("Analyse not found with this id : " + sousAnalyseDto.getAnalyse().getId()));
         Reactif reactifExist = iReactifRepository.findByIdAndDeletedFalse(sousAnalyseDto.getReactif().getId()).orElseThrow(() -> new NotFoundException("Reactif not found with this id : " + sousAnalyseDto.getReactif().getId()));
 
+        //TODO: CHANGE QUANTITY OF REACTIF SELECTED
+        changeQuantityStockOfReactif(reactifExist);
+
         sousAnalyseDto.setAnalyse(modelMapper.map(analyseExist, AnalyseDto.class));
         sousAnalyseDto.setReactif(modelMapper.map(reactifExist, ReactifDto.class));
 
@@ -55,6 +58,8 @@ public class SousAnalyseServiceImpl implements ISousAnalyseService {
         SousAnalyse sousAnalyseExist = iSousAnalyseRepository.findByIdAndDeletedFalse(id).orElseThrow(() -> new NotFoundException("Sous analyse not found with this id : " + id));
         Analyse analyseExist = iAnalyseRepository.findByIdAndDeletedFalse(sousAnalyseDto.getAnalyse().getId()).orElseThrow(() -> new NotFoundException("Analyse not found with this id : " + sousAnalyseDto.getAnalyse().getId()));
         Reactif reactifExist = iReactifRepository.findByIdAndDeletedFalse(sousAnalyseDto.getReactif().getId()).orElseThrow(() -> new NotFoundException("Reactif not found with this id : " + sousAnalyseDto.getReactif().getId()));
+
+        changeQuantityStockOfReactif(reactifExist);
 
         sousAnalyseExist.setTitle(sousAnalyseDto.getTitle());
         sousAnalyseExist.setEtatNormalMin(sousAnalyseDto.getEtatNormalMin());
@@ -95,6 +100,18 @@ public class SousAnalyseServiceImpl implements ISousAnalyseService {
     {
         SousAnalyse sousAnalyse = iSousAnalyseRepository.findByTitleAndDeletedFalse(title).orElseThrow(() -> new NotFoundException("Sous analyse not found with this title : " + title));
         return modelMapper.map(sousAnalyse, SousAnalyseDto.class);
+    }
+
+    @Override
+    public void changeQuantityStockOfReactif(Reactif reactifExist)
+    {
+        if(reactifExist.getQuantityStock() != 0)
+        {
+            reactifExist.setQuantityStock(reactifExist.getQuantityStock() - 1);
+            iReactifRepository.save(reactifExist);
+        }else{
+            throw new ValidationException("Ce material est n'est pas disponible dans le stock.");
+        }
     }
 
     @Override
