@@ -10,7 +10,6 @@ import java.util.Optional;
 
 @Repository
 public interface IPatientRepository extends JpaRepository<Patient,Long> {
-
     List<Patient> findByDeletedFalse();
     Optional<Patient> findByIdAndDeletedFalse(Long id);
     Optional<Patient> findByNomAndDeletedFalse(String name);

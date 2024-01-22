@@ -1,5 +1,6 @@
 package com.example.labxpert.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,9 +26,10 @@ public class Planification {
     @ManyToOne
     private User technicien;
 
-    private LocalDate date_debut;
-    private LocalDate date_fin;
+    private LocalDate dateDebut;
+    private LocalDate dateFin;
 
+    @JsonIgnore
     @Column(name = "is_deleted")
     private Boolean deleted;
 }

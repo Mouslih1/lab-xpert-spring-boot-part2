@@ -3,6 +3,7 @@ package com.example.labxpert.Dtos;
 import com.example.labxpert.Model.Echontillon;
 import com.example.labxpert.Model.Enum.Sexe;
 import com.example.labxpert.Model.Patient;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -19,36 +20,37 @@ import javax.validation.constraints.*;
 public class PatientDto implements Serializable {
     Long id;
 
-    @NotNull(message = "Le nom est requise !")
+    @NotNull
     String nom;
 
-    @NotNull(message = "Le prénom est requise !")
+    @NotNull
     String prenom;
 
-    @NotNull(message = "L'addresse est requise !")
+    @NotNull
     @Size(min = 5)
     String address;
 
-    @NotNull(message = "Le numéro de téléphone est requise !")
-    @Pattern(regexp = "^\\+?[0-9. ()-]{8,}$", message = "Format de numéro de téléphone invalide !")
+    @NotNull
+    @Pattern(regexp = "^\\+?[0-9. ()-]{8,}$")
     String tel;
 
-    @NotNull(message = "La ville est requise !")
+    @NotNull
     String ville;
 
-    @NotNull(message = "Le sexe est requise !")
+    @NotNull
     Sexe sexe;
 
-    @Past(message = "La date de naissance doit être dans le passé !")
-    LocalDate date_naissance;
+    @Past
+    LocalDate dateNaissance;
 
-    @Positive(message = "L'âge doit être supérieur à 0 !")
     @Min(18)
     @Max(80)
     double age;
 
+    @JsonIgnore
     @Builder.Default
     Boolean deleted = false;
 
-    List<Echontillon> echontillons;
+    @JsonIgnoreProperties(value = "patient")
+    List<EchontillonDto> echontillons;
 }

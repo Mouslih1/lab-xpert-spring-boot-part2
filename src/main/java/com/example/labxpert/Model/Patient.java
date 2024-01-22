@@ -1,5 +1,6 @@
 package com.example.labxpert.Model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +17,7 @@ public class Patient extends Person{
 
     private double age;
 
+    @JsonIgnore
     @Column(name = "is_deleted")
     private Boolean deleted;
 

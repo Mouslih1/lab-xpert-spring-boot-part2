@@ -1,14 +1,19 @@
 package com.example.labxpert.Service;
 
+
+import com.example.labxpert.Dtos.UserDto;
 import com.example.labxpert.Model.User;
 
 import java.util.List;
 
 public interface IUserService {
 
-    User add(User user);
-    User update(User user);
+    UserDto add(UserDto userDto);
+    UserDto update(Long id, UserDto userDto);
     void delete(Long id);
-    List<User> getAll();
-    User getById(Long id);
+    List<UserDto> getAll();
+    UserDto getById(Long id);
+    UserDto getByName(String name);
+    String getByEmail(String email);
+    void validation(UserDto userDto);
 }

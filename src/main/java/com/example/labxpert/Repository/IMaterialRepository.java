@@ -1,15 +1,18 @@
 package com.example.labxpert.Repository;
 
+import com.example.labxpert.Model.Fournisseur;
 import com.example.labxpert.Model.Material;
-import com.example.labxpert.Model.Patient;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IMaterialRepository extends JpaRepository<Material,Long>{
+@Repository
+public interface IMaterialRepository extends JpaRepository<Material, Long> {
     List<Material> findByDeletedFalse();
     Optional<Material> findByIdAndDeletedFalse(Long id);
-    Optional<Material> findByNomAndDeletedFalse(String name);
-
+    Optional<Material> findByLibelleAndDeletedFalse(String name);
+    List<Material> findByPriceBeforeAndDeletedFalse(double price);
+    List<Material> findByAvailableQuantityBeforeAndDeletedFalse(int availableQuantity);
 }

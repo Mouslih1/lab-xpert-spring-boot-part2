@@ -1,6 +1,7 @@
 package com.example.labxpert.Controller;
 
 import com.example.labxpert.Dtos.PatientDto;
+import com.example.labxpert.Exception.MessageErrorException.MessageError;
 import com.example.labxpert.Service.IPatientService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,25 +14,25 @@ import java.util.NoSuchElementException;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/v1/patient")
+@RequestMapping("/api/v1/patients")
 public class PatientController {
 
     private final IPatientService iPatientService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<PatientDto>> getAll()
     {
         return ResponseEntity.ok(iPatientService.getAll());
     }
 
-    @PostMapping
+    @PostMapping("/add")
     public ResponseEntity<PatientDto> save(@RequestBody @Valid PatientDto patientDto)
     {
         PatientDto patientSaved = iPatientService.add(patientDto);
         return new ResponseEntity<>(patientSaved, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/update")
     public ResponseEntity<PatientDto> update(@RequestBody @Valid PatientDto patientDto, @PathVariable Long id)
     {
         PatientDto patientUpdated = iPatientService.update(id, patientDto);
@@ -49,7 +50,7 @@ public class PatientController {
         }
     }
 
-    @GetMapping
+    @GetMapping("/patient")
     public ResponseEntity<PatientDto> getByName(@RequestParam String name)
     {
         try{
@@ -60,10 +61,11 @@ public class PatientController {
         }
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> delete(@PathVariable Long id)
+    @DeleteMapping("/{id}/delete")
+    public ResponseEntity<MessageError> delete(@PathVariable Long id)
     {
+        MessageError messageError = new MessageError("Patient deleted successfully.");
         iPatientService.delete(id);
-        return new ResponseEntity<>("Patient deleted successfully", HttpStatus.OK);
+        return new ResponseEntity<>(messageError, HttpStatus.OK);
     }
 }

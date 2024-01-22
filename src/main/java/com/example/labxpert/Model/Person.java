@@ -27,5 +27,5 @@ public abstract class Person {
     @Enumerated(EnumType.STRING)
     private Sexe sexe;
 
-    private LocalDate date_naissance;
+    private LocalDate dateNaissance;
 }

@@ -1,17 +1,19 @@
 package com.example.labxpert.Service;
 
-import com.example.labxpert.Dtos.FournisseurDto;
 import com.example.labxpert.Dtos.MaterialDto;
+import com.example.labxpert.Dtos.PatientDto;
 
 import java.util.List;
 
-public interface IMaterialService  {
+public interface IMaterialService {
 
     MaterialDto add(MaterialDto materialDto);
     MaterialDto update(Long id, MaterialDto materialDto);
     void delete(Long id);
     List<MaterialDto> getAll();
     MaterialDto getById(Long id);
-    MaterialDto getByName(String name);
+    MaterialDto getByLibelle(String libelle);
+    List<MaterialDto> getByPriceBefore(double price);
+    List<MaterialDto> getByAvailableQuantityBefore(int availableQuantity);
     void validation(MaterialDto materialDto);
 }

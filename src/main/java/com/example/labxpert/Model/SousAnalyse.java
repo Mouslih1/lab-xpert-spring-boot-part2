@@ -1,6 +1,7 @@
 package com.example.labxpert.Model;
 
 import com.example.labxpert.Model.Enum.StatusResult;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +20,8 @@ public class SousAnalyse {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
-    private double etat_normal_max;
-    private double etat_normal_min;
+    private double etatNormalMax;
+    private double etatNormalMin;
 
     @ManyToOne
     private Analyse analyse;
@@ -31,6 +32,7 @@ public class SousAnalyse {
     @Enumerated(EnumType.STRING)
     private StatusResult statusResult;
 
+    @JsonIgnore
     @Column(name = "is_deleted")
     private Boolean deleted;
 }

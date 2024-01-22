@@ -1,9 +1,10 @@
 package com.example.labxpert.Dtos;
 
-import com.example.labxpert.Dtos.EchontillonDto;
-import com.example.labxpert.Dtos.MaterialDto;
 import com.example.labxpert.Model.EchontillonMaterial;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
+
+import javax.validation.constraints.*;
 
 import java.io.Serializable;
 
@@ -15,12 +16,21 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Builder
 public class EchontillonMaterialDto implements Serializable {
-    Long id;
-    EchontillonDto echontillon;
-    MaterialDto material;
-    int quantity;
-    double price_total;
 
+    Long id;
+
+    @NotNull
+    EchontillonDto echontillon;
+
+    @NotNull
+    MaterialDto material;
+
+    @Min(1)
+    int quantity;
+
+    double priceTotal;
+
+    @JsonIgnore
     @Builder.Default
     Boolean deleted = false;
 }

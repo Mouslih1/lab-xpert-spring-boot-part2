@@ -1,6 +1,6 @@
 package com.example.labxpert.Model;
 
-import com.example.labxpert.Model.Enum.TypeAnalyse;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,15 +22,17 @@ public class Echontillon {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String codeEchontillon;
+
     @ManyToOne
     private Patient patient;
 
     private LocalDate date_p;
 
+    @JsonIgnore
     @Column(name = "is_deleted")
     private Boolean deleted;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "echontillon", fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Analyse> analyses = new ArrayList<>();
 }
